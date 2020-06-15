@@ -68,7 +68,7 @@ for i in dic:
 
 
 # create database and fill pipeline table
-conn = sqlite3.connect('ProjectDatabase.db')
+conn = sqlite3.connect('CONP.db')
 c = conn.cursor()
 c.execute("DROP TABLE IF EXISTS pipelines")
 c.execute("""create table pipelines(
