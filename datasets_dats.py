@@ -97,7 +97,7 @@ conn = sqlite3.connect('CONP.db')
 cursor = conn.cursor()
 cursor.execute("DROP TABLE IF EXISTS dats_table")
 cursor.execute("""CREATE TABLE dats_table (
-    dataset_name text PRIMARYKEY,
+    dataset_name text PRIMARY KEY,
     DATS_type text,
     DATS_description text
 )""")
