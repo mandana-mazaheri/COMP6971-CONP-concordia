@@ -4,7 +4,9 @@ This project aims to provide tag-based and provenance-based recommendation syste
 
 ## Installation
 
-Firstly, you need to install requirements 
+Firstly, you need to install requirements
+
+---
 
 ### On Windows:
 
@@ -17,6 +19,8 @@ Firstly, you need to install requirements
    `$python -m nltk.downloader punkt stopwords` 
     
 4. Install [CONP_Recommender](PYPI----)  (Open **git bash** as terminal) 
+
+---
 
 ### On Linux 
 
