@@ -54,7 +54,6 @@ Firstly, you need to install requirements
     
    `$chmod +x CONP_Recommender` 
 
-**Restart linux**
 
 ---
 
