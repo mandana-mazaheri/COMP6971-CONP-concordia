@@ -94,7 +94,7 @@ class CONP_Recommender(object):
 	def recommendProvenanceBased(self):
 		#self.provenanceBasedRecommender.init()
 		#self.provenanceBasedRecommender.fillDicsFromRecords()
-		return self.provenanceBasedRecommender.recommendForAllPipelinesAndDatasets()
+		self.provenanceBasedRecommender.recommendForAllPipelinesAndDatasets()
 	def recommendTagBased(self):
 		self.tagBasedRecommender.recommend()
 
@@ -201,11 +201,14 @@ class CONP_Recommender(object):
 				#self.reportResultsTable()
 				if argv[1]:
 					if str(argv[1]) == 'prov':
-						print("provenanced-based recommender")
+						self.recommendProvenanceBased()
+						print("provenanced-based recommender, recommendForPiplines.json and recommendForDatasets.json is created in ")
+						'''
 						linesOfPipelineTable,linesOfDatasetTable = self.recommendProvenanceBased()
 						print(tabulate(linesOfPipelineTable,headers=["pipeline","List Of Datasets"],tablefmt="grid"))
 						print('\n\n\n')
 						print(tabulate(linesOfDatasetTable,headers=["dataset","List Of pipelines"],tablefmt="grid"))
+						'''
 					elif str(argv[1]) == 'tag':
 						print("tag-based recommender")
 						self.recommendTagBased()
