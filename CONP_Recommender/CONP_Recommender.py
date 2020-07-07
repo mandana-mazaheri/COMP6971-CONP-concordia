@@ -120,6 +120,7 @@ class CONP_Recommender(object):
 			if str(argv[0]) in ['-v', '--version']:
 				print("CONP_Recommender version 0.0")
 			elif str(argv[0]) == 'init':
+				'''
 				source = os.path.join(os.path.dirname(__file__), "conp-dataset.zip")
 				destination = cachePath
 				if path.exists(os.path.join(cachePath, "conp-dataset")):
@@ -137,9 +138,11 @@ class CONP_Recommender(object):
 					Archive(source).extractall(destination)
 					print("conp-dataset extracted successfully", flush=True)
 
+
 			
 			elif str(argv[0]) == 'update':  ####Problem,should be run in bash
 				#api.install(source='https://github.com/CONP-PCNO/conp-dataset.git', path = cachePath)
+				'''
 				api.install(source='https://github.com/CONP-PCNO/conp-dataset.git',recursive = True, path = os.path.join(cachePath, "conp-dataset"))
 				'''
 					g = Github()
@@ -165,7 +168,7 @@ class CONP_Recommender(object):
 						if not path.exists(provenancePath):
 							os.mkdir(provenancePath)
 						
-						#replace with pull boutiques
+						#replace with pull boutiques, this is a temporary solution to have provenance records
 						print("use boutique to pull...this should be fixed...")
 						source = os.path.join(os.path.dirname(__file__), "data.zip")
 						destination = os.path.join(homePath,'.cache','boutiques')
@@ -185,18 +188,7 @@ class CONP_Recommender(object):
 						self.fillDatsTable()
 						print("pipeline table has been filled")
 
-				"""				
-				elif str(argv[0]) == 'FillDataTable':
-					print("install FillDataTable")
-					#self.fillDataTable()
-				elif str(argv[0]) == 'FillPipelineTable':
-					print("install FillPipelineTable")
-					self.getAndFillPipeline()
-					self.fillDatsTable()
 
-				elif str(argv[0]) == 'FillProvenanceTable':
-					print("install FillProvenanceTable")
-				"""
 			elif str(argv[0]) == 'recom':
 				#self.reportResultsTable()
 				if argv[1]:
@@ -219,9 +211,6 @@ class CONP_Recommender(object):
 
 
 def main(args=None):
-	#print(sys.argv[1:len(sys.argv)])
-
 	recommender = CONP_Recommender()
-	#recommender.process(["init"])
 	recommender.process(sys.argv[1:len(sys.argv)])
 	
