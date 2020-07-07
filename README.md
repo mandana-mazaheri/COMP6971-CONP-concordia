@@ -4,13 +4,13 @@ This project aims to provide tag-based and provenance-based recommendation syste
 
 ## Get dataset
 
-Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset.
+Firstly, you need to run `conp-dataset_installation.py`on your system to have the whole installed conp-dataset.
 
 **On windows run it in Git Bash, it takes time**
 
 ---
 
-### Instullation:
+### Installation:
 
 
 1. Install [datalad](https://handbook.datalad.org/en/latest/intro/installation.html), in this installation you should install Git, and git-annex.
@@ -21,7 +21,7 @@ Firstly, you need to run `conp-dataset_instullation.py`on your system to have th
  
  **OR** clone the whole repository and run 
  
- `pip instull .` 
+ `pip install .` 
  
 in the cloned directory
 
