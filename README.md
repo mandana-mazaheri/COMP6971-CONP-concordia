@@ -18,7 +18,7 @@ Firstly, you need to install requirements
     
    `$python -m nltk.downloader punkt stopwords` 
     
-3. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal) or run
+3. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
 
  `pip install -i https://test.pypi.org/simple/ CONP-Recommender==0.0`
 
