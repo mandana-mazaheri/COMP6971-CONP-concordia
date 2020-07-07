@@ -4,7 +4,7 @@ This project aims to provide tag-based and provenance-based recommendation syste
 
 ## Installation
 
-Firstly, you need to install requirements
+Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset.
 
 ---
 
@@ -12,15 +12,20 @@ Firstly, you need to install requirements
 
 
 1. Install [datalad](https://handbook.datalad.org/en/latest/intro/installation.html), in this installation you should install Git, and git-annex.
-2. Install requirements
-
-   `$pip install nltk`
     
-   `$python -m nltk.downloader punkt stopwords` 
-    
-3. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
+2. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
 
  `pip install -i https://test.pypi.org/simple/ CONP-Recommender==0.0`
+ 
+ **OR** clone the whole repository and run 
+ 
+ `pip instull .` 
+ 
+in the cloned directory
+
+3. Run
+
+   `$python -m nltk.downloader punkt stopwords` 
 
 
 ---
