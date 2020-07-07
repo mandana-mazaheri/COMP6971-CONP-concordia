@@ -2,13 +2,13 @@
 
 This project aims to provide tag-based and provenance-based recommendation systems to recommend [CONP datasets](https://portal.conp.ca/search) to [CONP Pipelines](https://portal.conp.ca/pipelines) and vice versa. 
 
-## Installation
+## Get dataset
 
-Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset.
+Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset, it takes time particularly in windows.
 
 ---
 
-### On Windows and Linux:
+### Instullation:
 
 
 1. Install [datalad](https://handbook.datalad.org/en/latest/intro/installation.html), in this installation you should install Git, and git-annex.
