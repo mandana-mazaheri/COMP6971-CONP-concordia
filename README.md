@@ -4,7 +4,9 @@ This project aims to provide tag-based and provenance-based recommendation syste
 
 ## Get dataset
 
-Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset, it takes time particularly in windows.
+Firstly, you need to run `conp-dataset_instullation.py`on your system to have the whole instulled conp-dataset.
+
+**On windows run it in Git Bash, it takes time**
 
 ---
 
