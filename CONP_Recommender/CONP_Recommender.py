@@ -194,7 +194,7 @@ class CONP_Recommender(object):
 				if argv[1]:
 					if str(argv[1]) == 'prov':
 						self.recommendProvenanceBased()
-						print("provenanced-based recommender, recommendForPiplines.json and recommendForDatasets.json is created in ")
+						print("provenanced-based recommender, recommendForPiplines.json and recommendForDatasets.json is created in HOME/CONP_Recommender")
 						'''
 						linesOfPipelineTable,linesOfDatasetTable = self.recommendProvenanceBased()
 						print(tabulate(linesOfPipelineTable,headers=["pipeline","List Of Datasets"],tablefmt="grid"))
