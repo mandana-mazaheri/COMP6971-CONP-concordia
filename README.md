@@ -31,7 +31,7 @@ You can run these commands in Terminal:
 
 	`$CONP_Recommender --version`
 	
-1. Firstly, you need to run `conp-dataset_installation.py`on your system to have the whole installed [conp-dataset](https://github.com/CONP-PCNO/conp-dataset) on your machine.
+1. Firstly, you need to [config on git](https://docs.github.com/en/github/using-git/setting-your-username-in-git) and then run `conp-dataset_installation.py`on your system to have the whole installed [conp-dataset](https://github.com/CONP-PCNO/conp-dataset) on your machine.
 
 **On windows run it in Git Bash, it takes time**
 
