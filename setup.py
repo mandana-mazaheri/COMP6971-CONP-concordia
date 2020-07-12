@@ -15,7 +15,7 @@ DEPS = [
          #"DataFrame",      #For pandas
          #"Series",          #For pandas
          "pyunpack",        #For CONP Dataset extractor
-		 "pygithub",
+	 "pygithub",
          "datalad",
        ]
 
