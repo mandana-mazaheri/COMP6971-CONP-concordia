@@ -51,7 +51,6 @@ You can run these commands in Terminal:
    `CONP_Recommender init`
 
 
-*--On windows run it in Git Bash, it takes time*
 
  
 
