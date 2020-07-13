@@ -69,6 +69,3 @@ class reportResults(object):
                 #print (file)
 
 
-
-obj = reportResults()
-obj.reportResultsFunc()
