@@ -212,3 +212,5 @@ class provenanceTableFeeder(object):
                                 self.getInputFiles(val,exe_id)
 '''
         
+obj = provenanceTableFeeder()
+obj.fillProvenanceTable()

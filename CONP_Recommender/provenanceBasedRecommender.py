@@ -62,6 +62,18 @@ class provenanceBasedRecommender(object):
 		self.successfullPipeline = []
 		self.pipelinesDict = {} # a dictionary to store all successful datasets for each pipeline
 		self.successfullDatasets = []
+		pipelineInfo = self.cursor.execute("SELECT pipeline_DOI, pipeline_name FROM summary_results")
+
+		self.pipelineInfoDict = {}
+		for record in pipelineInfo:
+			pipDOI = record[0]
+			pipName = record[1]
+			if not pipDOI in self.pipelineInfoDict:
+				self.pipelineInfoDict[pipDOI] = pipName
+
+		#print(pipelineInfoDict)
+
+
 		summaryRecords = self.cursor.execute("SELECT pipeline_DOI, Dataset, exit_code FROM summary_results")
 
 		# filling pipeline dict
@@ -178,19 +190,36 @@ class provenanceBasedRecommender(object):
 		linesOfDatasetTable = []
 
 		for pipeline in self.pipelinesDict.keys():
+			eachPipInfo = {}
 			self.updateDatasetGroupForPipeline()
 			self.updatePipelineGroupForDataset()
+			pipName = self.pipelineInfoDict[pipeline]
+			pipDetailInfo = {}
+			pipDetailInfo["name"] = pipName
+
+			eachPipInfo["pipline_info"] = pipDetailInfo
 
 			#print(pipeline)
 			linesOfPipelineTable = (self.recommendDatasetForPipeline(pipeline,self.pipelinesDict))
-			pipContents[pipeline] = linesOfPipelineTable
+			eachPipInfo["recommended_datasets"] = linesOfPipelineTable
+
+			pipContents[pipeline] = eachPipInfo
 
 		for dataset in self.datasetDict.keys():
+			eachDataInfo = {}
 			self.updateDatasetGroupForPipeline()
 			self.updatePipelineGroupForDataset()
 			#print(pipeline)
+			
+
 			linesOfDatasetTable = (self.recommendPipelineForDataset(dataset,self.datasetDict))
-			dataContents[dataset] = linesOfDatasetTable
+			pipDOI_name = {}
+			for pip in linesOfDatasetTable:
+				pipDOI_name[pip] = self.pipelineInfoDict[pip]
+
+
+			eachDataInfo["recommended_pipelines"] = pipDOI_name
+			dataContents[dataset] = eachDataInfo
 
 		
 
@@ -205,10 +234,3 @@ class provenanceBasedRecommender(object):
 
 
 
-'''
-obj = provenanceBasedRecommender()
-obj.init()
-obj.fillDicsFromRecords()
-
-obj.recommendForAllPipelinesAndDatasets()
-'''

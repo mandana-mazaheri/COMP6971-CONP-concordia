@@ -70,4 +70,5 @@ class reportResults(object):
 
 
 
-#obj = reportResults
+obj = reportResults()
+obj.reportResultsFunc()
