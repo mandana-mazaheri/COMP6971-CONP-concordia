@@ -5,6 +5,8 @@ import nltk
 from nltk.corpus import stopwords
 import re
 import math
+import numpy
+import json 
 ######################################
 
 
@@ -37,6 +39,25 @@ class tagBasedRecommender:
         return idfDic
     ########################################
 
+
+
+    ###calculating Dot Product##############
+    def cosine(self,d1,d2):
+        dot=0
+        for i in d1:
+            if i in d2:
+                dot += d1[i] * d2[i]
+        firstNumber=0
+        secondNumber=0
+        for i in d1:
+            firstNumber += d1[i]*d1[i]
+        for i in d2:
+            secondNumber += d2[i]*d2[i]
+        firstNumber = math.sqrt(firstNumber)
+        secondNumber = math.sqrt(secondNumber)
+        eucildean = firstNumber*secondNumber
+        return dot/eucildean
+    ########################################
 
 
     ###computing final values of tf-idf#####
@@ -147,8 +168,8 @@ class tagBasedRecommender:
             tags_list=[]
             if(keywords != None):
                 tem_keywords = keywords.split(',')
-            for i in tem_keywords:
-                tags_list.append(i.lower())
+                for i in tem_keywords:
+                    tags_list.append(i.lower())
             tem_des = nltk.word_tokenize(des)
             stop_words = set(stopwords.words('english'))
             filtered_words=[]
@@ -195,51 +216,55 @@ class tagBasedRecommender:
         #########################################
 
         ###calculating score and suggest a result to selected option###
-        system_dic={}
-        option = input('Select "1" for pipelines or "2" for dataset:')
-        if(option=="1"):
-            tfDic = self.computing_tf(dic,worddic)
-            idfDic = self.computing_idf(uniquewords,dic)
-            tfidfDic = self.computing_tfidf(tfDic,idfDic)
-            for each in dataset_dic:
-                tem_dic={}
-                tem_list = dataset_dic[each]
-                for ID in tfidfDic:
-                    score =0
-                    curr_dic= tfidfDic[ID]
-                    for word in tem_list:
-                        if word in curr_dic:
-                            score += curr_dic[word]
-                    tem_dic[ID] = score
-                system_dic[each] = tem_dic
-            for each in system_dic:
-                tem_list=[]
-                for i in system_dic[each]:
-                    if not system_dic[each][i]==0:
-                        tem_list.append(i)
-                print(each,"---->",tem_list)
-        elif(option=="2"):
-            tfDic = self.computing_tf(dataset_dic,dataset_worddic)
-            idfDic = self.computing_idf(dataset_uniquewords,dataset_dic)
-            tfidfDic = self.computing_tfidf(tfDic,idfDic)
-            for each in dic:
-                tem_dic={}
-                tem_list = dic[each]
-                for ID in tfidfDic:
-                    score =0
-                    curr_dic= tfidfDic[ID]
-                    for word in tem_list:
-                        if word in curr_dic:
-                            score += curr_dic[word]
-                    tem_dic[ID] = score
-                system_dic[each] = tem_dic
-            for each in system_dic:
-                tem_list=[]
-                for i in system_dic[each]:
-                    if not system_dic[each][i]==0:
-                        tem_list.append(i)
-                print(each,"---->",tem_list)
-        else:
-            print("your option is not correct")
+        finalpipeline_dic={}
+        finaldataset_dic={}
+        PipelinetfDic = self.computing_tf(dic,worddic)
+        PipelineidfDic = self.computing_idf(uniquewords,dic)
+        PipelinetfidfDic = self.computing_tfidf(PipelinetfDic,PipelineidfDic)
+        DatasettfDic = self.computing_tf(dataset_dic,dataset_worddic)
+        DatasetidfDic = self.computing_idf(dataset_uniquewords,dataset_dic)
+        DatasettfidfDic = self.computing_tfidf(DatasettfDic,DatasetidfDic)
+        resultDicforpipeline={}
+        for i in PipelinetfidfDic:
+            datasetresultdic={}
+            for j in DatasettfidfDic:
+                result = self.cosine(PipelinetfidfDic[i],DatasettfidfDic[j])
+                datasetresultdic[j] = result
+            resultDicforpipeline[i] = datasetresultdic
+        for each in resultDicforpipeline:
+            datasetresult = resultDicforpipeline[each]
+            List = []
+            for i in datasetresult:
+                List.append(datasetresult[i])
+            median = numpy.median(List)
+            resultlist=[]
+            for i in datasetresult:
+                if datasetresult[i] >= median:
+                    resultlist.append(i)
+            finalpipeline_dic[each] = resultlist
+        resultdicfordataset={}
+        for i in DatasettfidfDic:
+            pipelineresultdic={}
+            for j in PipelinetfidfDic:
+                result = self.cosine(DatasettfidfDic[i],PipelinetfidfDic[j])
+                pipelineresultdic[j] = result
+            resultdicfordataset[i] = pipelineresultdic
+        for each in resultdicfordataset:
+            pipelineresult = resultdicfordataset[each]
+            List=[]
+            for i in pipelineresult:
+                List.append(pipelineresult[i])
+            median = numpy.median(List)
+            resultlist = []
+            for i in pipelineresult:
+                if pipelineresult[i] >= median:
+                    resultlist.append(i)
+            finaldataset_dic[each] = resultlist
+        ###writing result###############
+        with open ('pipelineresult.json','w') as outfile:
+            json.dump(finalpipeline_dic,outfile,indent=4)
+        with open ('datasetresult.json','w') as outfile:
+            json.dump(finaldataset_dic,outfile,indent=4)
         ###############################################################    
-
+#obj = tagBasedRecommender()
+#obj.recommend()
