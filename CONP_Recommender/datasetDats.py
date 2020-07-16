@@ -6,6 +6,7 @@ from os import path
 import sqlite3
 import csv
 import json
+import logging
 
 
 # getting dats file from projects
@@ -52,14 +53,15 @@ class datasetDats(object):
         elif osType == 'Linux':
             cachePath = "~/.cache"
         '''
+        '''
         cachePath = os.path.expanduser('~')
         if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
             os.mkdir(os.path.join(cachePath, "CONP_Recommender"))
 
         cachePath = os.path.join(cachePath, "CONP_Recommender")
+        '''
 
-
-        root = os.path.join(cachePath, "conp-dataset", "projects")
+        root = os.path.join(os.environ['CONP_RECOMMENDER_PATH'], "conp-dataset", "projects")
 
         #root =os.getcwd()+"/conp-dataset/projects"
         list_of_datasets = os.listdir(root)
@@ -108,9 +110,9 @@ class datasetDats(object):
                                                 type_dic[title] = data[key]
                                             if(key == 'keywords'):
                                                 keyword_dic[title] = data[key] 
-        print(len(description_dic))
-        print(len(type_dic))
-        print(len(keyword_dic))
+        #print(len(description_dic))
+        #print(len(type_dic))
+        #print(len(keyword_dic))
         self.final_type_dic={}
         #print(type_dic)
         #print(keyword_dic)
@@ -118,7 +120,7 @@ class datasetDats(object):
 
 
 
-        conn = sqlite3.connect( os.path.join(cachePath, 'CONP.db'))
+        conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
         cursor = conn.cursor()
         cursor.execute("DROP TABLE IF EXISTS dats_table")
         cursor.execute("""CREATE TABLE dats_table (
@@ -142,7 +144,7 @@ class datasetDats(object):
                 cursor.execute('INSERT INTO dats_table VALUES(?,?,?);',record)
                 conn.commit()
         except sqlite3.Error as error:
-            print("recored error: ",error)
+            logging.error("recored error: ",error)
         finally:
             if(conn):
                 conn.close()
