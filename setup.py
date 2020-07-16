@@ -11,6 +11,10 @@ DEPS = [
          "boutiques",
          #"sqlite3",
          "nltk",
+	 "numpy",
+	 "math",
+	 "re",
+	 "json",
          #"pandas",
          #"DataFrame",      #For pandas
          #"Series",          #For pandas
