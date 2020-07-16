@@ -79,7 +79,9 @@ class tagBasedRecommender:
     def recommend(self):
 
         ###retrive data from pipelenes table in database###
-        conn = sqlite3.connect(os.path.join(os.path.expanduser('~'), 'CONP_Recommender', 'CONP.db'))
+        #conn = sqlite3.connect(os.path.join(os.path.expanduser('~'), 'CONP_Recommender', 'CONP.db'))
+        conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
+        
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM pipelines")
         rows = cursor.fetchall()
