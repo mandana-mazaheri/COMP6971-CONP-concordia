@@ -18,14 +18,15 @@ class reportResults(object):
         elif osType == 'Linux':
             cachePath = "~/.cache"
         '''
+        '''
         cachePath = os.path.expanduser('~')
         if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
             os.mkdir(os.path.join(cachePath, "CONP_Recommender"))
 
         cachePath = os.path.join(cachePath, "CONP_Recommender")
 
-        
-        conn = sqlite3.connect(os.path.join(cachePath, 'CONP.db'))
+        '''
+        conn = sqlite3.connect(os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
 
 
 

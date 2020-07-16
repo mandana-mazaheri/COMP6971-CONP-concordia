@@ -6,6 +6,7 @@ from os import path
 import sqlite3
 import csv
 from os import stat
+import logging
 
 class dataTableFeeder(object):
 
@@ -32,17 +33,18 @@ class dataTableFeeder(object):
         elif osType == 'Linux':
             cachePath = "~/.cache"
         '''
+        '''
         cachePath = os.path.expanduser('~')
         
         if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
             os.mkdir(os.path.join(cachePath, "CONP_Recommender"))
 
         cachePath = os.path.join(cachePath, "CONP_Recommender")
-
-        root = os.path.join(cachePath, "conp-dataset", "projects")
+        '''
+        root = os.path.join(os.environ['CONP_RECOMMENDER_PATH'], "conp-dataset", "projects")
 
         list_of_datasets_path = self.findDataset(root)
-        conn = sqlite3.connect(os.path.join(cachePath, 'CONP.db'))
+        conn = sqlite3.connect(os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
         HASH_KEYWORDS = ["MD5E-"]
         # HASH_KEYWORDS = ["/MD5E-", "/URL"]
 
@@ -130,7 +132,7 @@ class dataTableFeeder(object):
                                                 count = count + 1
                                                 #print("Count : " + str(count))
                                             except sqlite3.IntegrityError:
-                                                print("duplicated file in dataset: ", dataset_name, "\n file name: ",file_name)
+                                                logging.error("duplicated file in dataset: ", dataset_name, "\n file name: ",file_name)
 
                                             break
 

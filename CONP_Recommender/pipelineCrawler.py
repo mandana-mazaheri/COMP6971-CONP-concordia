@@ -7,6 +7,7 @@ import csv
 import platform
 import os.path
 from os import path
+import logging
 
 
 
@@ -21,6 +22,7 @@ class pipelineCrawler(object):
         elif osType == 'Linux':
             cachePath = "~/.cache"
         '''
+        '''
         cachePath = os.path.expanduser('~')
         
         if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
@@ -28,12 +30,12 @@ class pipelineCrawler(object):
 
         cachePath = os.path.join(cachePath, "CONP_Recommender")
 
-
-        root = os.path.join(cachePath, "conp-dataset", "projects")
-        print(root)
+        '''
+        root = os.path.join(os.environ['CONP_RECOMMENDER_PATH'], "conp-dataset", "projects")
+        #print(root)
         #root = os.getcwd()+"/conp-dataset\\projects"
        
-        conn = sqlite3.connect( os.path.join(cachePath, 'CONP.db'))
+        conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
 
         #update pipleline list with maximum number
         x = 2
@@ -73,7 +75,7 @@ class pipelineCrawler(object):
                         dic[PipeLineDOIlist[counter]] = None
                     counter +=1
                         
-        print(len(description_dic))
+        #print(len(description_dic))
 
         #prepare each pipeline and their tags for inserting into table
         FinalDic={}
@@ -123,7 +125,7 @@ class pipelineCrawler(object):
                 conn.commit()
             c.close()
         except sqlite3.Error as error:
-            print("recored error: ",error)
+            logging.error("recored error: ",error)
         finally:
             if(conn):
                 conn.close()

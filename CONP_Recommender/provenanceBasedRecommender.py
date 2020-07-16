@@ -7,6 +7,8 @@ from os import path
 import sqlite3
 from tabulate import tabulate
 import codecs
+import logging
+
 
 class provenanceBasedRecommender(object):
 	def init(self):
@@ -18,12 +20,16 @@ class provenanceBasedRecommender(object):
 		elif osType == 'Linux':
 			cachePath = "~/.cache"
 		'''
+		'''
 		self.cachePath = os.path.expanduser('~')
 		if not os.path.exists(os.path.join(self.cachePath, "CONP_Recommender")):
 			os.mkdir(os.path.join(self.cachePath, "CONP_Recommender"))
 
 		self.cachePath = os.path.join(self.cachePath, "CONP_Recommender")
-		self.conn = sqlite3.connect( os.path.join(self.cachePath, 'CONP.db'))
+		'''
+
+
+		self.conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
 		self.cursor = self.conn.cursor()
 
 	def datasetGroup(self):
@@ -223,8 +229,8 @@ class provenanceBasedRecommender(object):
 
 		
 
-		self.writeToJson(self.cachePath,'recommendForPiplines',pipContents)
-		self.writeToJson(self.cachePath,'recommendForDatasets',dataContents)
+		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForPiplines',pipContents)
+		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForDatasets',dataContents)
 		#return linesOfPipelineTable,linesOfDatasetTable
 
 		#print(tabulate(linesOfPipelineTable,headers=["pipeline","List Of Datasets"],tablefmt="grid"))
