@@ -8,19 +8,19 @@ with open("README.md", "r") as fh:
 '''
 
 DEPS = [
-         "boutiques",
-         #"sqlite3",
-         "nltk",
-	 "numpy",
-	 "math",
-	 "re",
-	 "json",
-         #"pandas",
-         #"DataFrame",      #For pandas
-         #"Series",          #For pandas
-         "pyunpack",        #For CONP Dataset extractor
-	 "pygithub",
-         "datalad",
+		"boutiques",
+		#"sqlite3",
+		"nltk",
+		"numpy",
+		"math",
+		"re",
+		"json",
+		#"pandas",
+		#"DataFrame",      #For pandas
+		#"Series",          #For pandas
+		"pyunpack",        #For CONP Dataset extractor
+		"pygithub",
+		"datalad",
        ]
 
 setuptools.setup(
