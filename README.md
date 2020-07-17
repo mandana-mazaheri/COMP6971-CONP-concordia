@@ -6,7 +6,7 @@ This project aims to provide tag-based and provenance-based recommendation syste
 ### Installation:
 
 
-1. make sure Git, and [git-annex](https://git-annex.branchable.com/install/) are installed on your machine
+1. Make sure Git, and [git-annex](https://git-annex.branchable.com/install/) are installed on your machine
     
 2. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
 
