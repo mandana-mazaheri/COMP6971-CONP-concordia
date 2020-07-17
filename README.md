@@ -6,7 +6,7 @@ This project aims to provide tag-based and provenance-based recommendation syste
 ### Installation:
 
 
-1. Install [datalad](https://handbook.datalad.org/en/latest/intro/installation.html), in this installation you should install Git, and git-annex.
+1. make sure Git, and [git-annex](https://git-annex.branchable.com/install/) are installed on your machine
     
 2. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
 
@@ -33,7 +33,7 @@ You can run these commands in Terminal:
 	
 1. Make sure your git is properly congigured, the instruction is [here](https://docs.github.com/en/github/using-git/setting-your-username-in-git).
 
-2. Clone conp-dataset and set the path for the result
+2. Clone [conp-dataset](https://github.com/CONP-PCNO/conp-dataset) and set the path for the result
 
 `CONP_Recommender init`
 
