@@ -190,6 +190,8 @@ class provenanceBasedRecommender(object):
 	def recommendForAllPipelinesAndDatasets(self):
 		pipContents = {}
 		dataContents = {}
+		pip_wholeList = []
+		data_wholeList = []
 		self.init()
 		self.fillDicsFromRecords()
 		linesOfPipelineTable = []
@@ -202,14 +204,18 @@ class provenanceBasedRecommender(object):
 			pipName = self.pipelineInfoDict[pipeline]
 			pipDetailInfo = {}
 			pipDetailInfo["name"] = pipName
+			pipDetailInfo["DOI"] = pipeline
 
 			eachPipInfo["pipline_info"] = pipDetailInfo
+
 
 			#print(pipeline)
 			linesOfPipelineTable = (self.recommendDatasetForPipeline(pipeline,self.pipelinesDict))
 			eachPipInfo["recommended_datasets"] = linesOfPipelineTable
+			pip_wholeList.append(eachPipInfo)
 
-			pipContents[pipeline] = eachPipInfo
+			#pipContents[pipeline] = eachPipInfo
+
 
 		for dataset in self.datasetDict.keys():
 			eachDataInfo = {}
@@ -217,18 +223,25 @@ class provenanceBasedRecommender(object):
 			self.updatePipelineGroupForDataset()
 			#print(pipeline)
 			
-
+			eachDataInfo["dataset_name"] = dataset
 			linesOfDatasetTable = (self.recommendPipelineForDataset(dataset,self.datasetDict))
-			pipDOI_name = {}
+			
+			listOfRecomPip = []
 			for pip in linesOfDatasetTable:
-				pipDOI_name[pip] = self.pipelineInfoDict[pip]
+				pipDOI_name = {}
+				pipDOI_name["pipeline_DOI"] = pip
+				pipDOI_name["pipeline_name"] = self.pipelineInfoDict[pip]
+				listOfRecomPip.append(pipDOI_name)
+				#pipDOI_name[pip] = self.pipelineInfoDict[pip]
 
 
-			eachDataInfo["recommended_pipelines"] = pipDOI_name
-			dataContents[dataset] = eachDataInfo
+			eachDataInfo["recommended_pipelines"] = listOfRecomPip
+			#dataContents[dataset] = eachDataInfo
+			data_wholeList.append(eachDataInfo)
 
 		
-
+		pipContents["results_for_pipelines"] = pip_wholeList
+		dataContents["results_for_datasets"] = data_wholeList
 		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForPiplines',pipContents)
 		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForDatasets',dataContents)
 		#return linesOfPipelineTable,linesOfDatasetTable
