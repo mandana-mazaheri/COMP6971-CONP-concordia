@@ -31,24 +31,29 @@ You can run these commands in Terminal:
 
 `CONP_Recommender --version`
 	
-1. Make sure your git is properly congigured, the instruction is [here](https://docs.github.com/en/github/using-git/setting-your-username-in-git) and then run the python file, `conp-dataset_installation.py` on your system to have the whole installed [conp-dataset](https://github.com/CONP-PCNO/conp-dataset) on your machine.
+1. Make sure your git is properly congigured, the instruction is [here](https://docs.github.com/en/github/using-git/setting-your-username-in-git).
 
+2. Clone conp-dataset and set the path for the result
+
+`CONP_Recommender init`
 
 2. Initialize the database
 
-   `CONP_Recommender install database`
+`CONP_Recommender install database`
 
 3. Use provenance-based recommender
 
-   `CONP_Recommender recom prov`
+`CONP_Recommender recom prov`
 
 4. Use tag-based recommender
 
-   `CONP_Recommender recom tag`
+`CONP_Recommender recom tag`
 
 5. If you want to update the conp-dataset run
 
-   `CONP_Recommender init`
+`CONP_Recommender update`
+
+   
 
 
 
