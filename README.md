@@ -3,20 +3,14 @@
 This project aims to provide tag-based and provenance-based recommendation systems to recommend [CONP datasets](https://portal.conp.ca/search) to [CONP Pipelines](https://portal.conp.ca/pipelines) and vice versa. 
 
 
-### Installation:
+### Installation:  
 
 
 1. Make sure Git, and [git-annex](https://git-annex.branchable.com/install/) are installed on your machine
-    
-2. Install [CONP_Recommender](https://test.pypi.org/project/CONP-Recommender/0.0/)  (Open **git bash** as terminal on **windows**) or run
 
- `pip install -i https://test.pypi.org/simple/ CONP-Recommender==0.0`
- 
- **OR** clone the whole repository and run 
+2. Clone the whole repository and run thic command in the cloned directory
  
  `pip install .` 
- 
-in the cloned directory
 
 3. Make sure you have the stopwords for NLTK
 
@@ -54,7 +48,7 @@ You can run these commands in Terminal:
 `CONP_Recommender update`
 
    
-
+--on **windows** work on **git bash** as terminal
 
 
  
