@@ -26,6 +26,13 @@ class tagBasedRecommender:
         return tfDic
     #######################################
 
+    ###calculate threshold#######################
+    def threshold(self,List):
+        maxi = max(List)
+        t = (maxi * 80)/100
+        return t
+    #############################################
+
 
 
     ###computing IDF values################
@@ -238,10 +245,11 @@ class tagBasedRecommender:
             List = []
             for i in datasetresult:
                 List.append(datasetresult[i])
-            median = numpy.median(List)
+            #median = numpy.median(List)
+            Threshold = self.threshold(List)
             resultlist=[]
             for i in datasetresult:
-                if datasetresult[i] >= median:
+                if datasetresult[i] >= Threshold:
                     resultlist.append(i)
             finalpipeline_dic[each] = resultlist
         resultdicfordataset={}
@@ -256,17 +264,41 @@ class tagBasedRecommender:
             List=[]
             for i in pipelineresult:
                 List.append(pipelineresult[i])
-            median = numpy.median(List)
+            #median = numpy.median(List)
+            Threshold = self.threshold(List)
             resultlist = []
             for i in pipelineresult:
-                if pipelineresult[i] >= median:
+                if pipelineresult[i] >= Threshold:
                     resultlist.append(i)
             finaldataset_dic[each] = resultlist
         ###writing result###############
         with open ('pipelineresult.json','w') as outfile:
-            json.dump(finalpipeline_dic,outfile,indent=4)
+            pipelinecontent={}
+            pipelineinfo = []
+            for each in finalpipeline_dic:
+                tem_dic={}
+                pipelineinformation={}
+                pipelineinformation['pipeline DOI']=each
+                tem_dic['pipeline information'] = pipelineinformation
+                tem_dic['recommended datasets']=finalpipeline_dic[each]
+                pipelineinfo.append(tem_dic)
+            pipelinecontent['result for pipeline:'] = pipelineinfo
+            json.dump(pipelinecontent,outfile,indent=4)
         with open ('datasetresult.json','w') as outfile:
-            json.dump(finaldataset_dic,outfile,indent=4)
+            datasetcontent={}
+            datasetinfo=[]
+            for each in finaldataset_dic:
+                tem_dic={}
+                tem_dic['dataset name'] = each
+                pinfo=[]
+                for pipeline in finaldataset_dic[each]:
+                    pinformation={}
+                    pinformation['pipeline DOI'] = pipeline
+                    pinfo.append(pinformation)
+                tem_dic['recommended pipelines']= pinfo
+                datasetinfo.append(tem_dic)
+            datasetcontent['result for dataset']= datasetinfo
+            json.dump(datasetcontent,outfile,indent=4)
         ###############################################################    
 #obj = tagBasedRecommender()
 #obj.recommend()
