@@ -57,7 +57,8 @@ class pipelineCrawler(object):
 
         #extract tags from each pipeline 
         dic={}
-        description_dic={} 
+        description_dic={}
+        nameDic={} 
         counter=0
         lastcounter=counter
         for i in DirectoryList:
@@ -71,6 +72,8 @@ class pipelineCrawler(object):
                             dic[PipeLineDOIlist[counter]] = data[key]
                         if key == 'description':
                             description_dic[PipeLineDOIlist[counter]] = data[key]
+                        if key == 'name':
+                            nameDic[PipeLineDOIlist[counter]] = data[key]
                     if not (dic.__contains__(PipeLineDOIlist[counter])):
                         dic[PipeLineDOIlist[counter]] = None
                     counter +=1
@@ -106,6 +109,7 @@ class pipelineCrawler(object):
         c = conn.cursor()
         c.execute("DROP TABLE IF EXISTS pipelines")
         c.execute("""create table pipelines(
+               Name text,
                ID text,
                Tags text,
                Descrption text,
@@ -120,8 +124,9 @@ class pipelineCrawler(object):
                     des = description_dic[each]
                 else:
                     des = None
-                one_record = [(idd),(tag),(des),]
-                count = c.execute('INSERT INTO pipelines VALUES (?,?,?);', one_record)
+                pipelineName = nameDic[each]
+                one_record = [(pipelineName),(idd),(tag),(des),]
+                count = c.execute('INSERT INTO pipelines VALUES (?,?,?,?);', one_record)
                 conn.commit()
             c.close()
         except sqlite3.Error as error:
