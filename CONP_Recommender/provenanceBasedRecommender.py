@@ -228,10 +228,10 @@ class provenanceBasedRecommender(object):
 			
 			listOfRecomPip = []
 			for pip in linesOfDatasetTable:
-				pipDOI_name = {}
-				pipDOI_name["pipeline_DOI"] = pip
-				pipDOI_name["pipeline_name"] = self.pipelineInfoDict[pip]
-				listOfRecomPip.append(pipDOI_name)
+				#pipDOI_name = {}
+				#pipDOI_name["pipeline_DOI"] = pip
+				#pipDOI_name["pipeline_name"] = self.pipelineInfoDict[pip]
+				listOfRecomPip.append(self.pipelineInfoDict[pip])
 				#pipDOI_name[pip] = self.pipelineInfoDict[pip]
 
 
