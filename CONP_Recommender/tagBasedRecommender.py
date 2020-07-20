@@ -98,11 +98,14 @@ class tagBasedRecommender:
 
         ###preparing data in order to pass them to tf-idf functions###
         dic={}
+        pipelineNameDic={}
         for row in rows:
-            ID = row[0]
-            tags = row[1]
-            des = row[2]
+            name = row[0]
+            ID = row[1]
+            tags = row[2]
+            des = row[3]
             tags_list=[]
+            pipelineNameDic[ID] = name
             if(tags != None):
                 tem_tags = tags.split(',')
             for i in tem_tags:
@@ -279,6 +282,7 @@ class tagBasedRecommender:
                 tem_dic={}
                 pipelineinformation={}
                 pipelineinformation['pipeline DOI']=each
+                pipelineinformation['pipeline Name']=pipelineNameDic[each]
                 tem_dic['pipeline information'] = pipelineinformation
                 tem_dic['recommended datasets']=finalpipeline_dic[each]
                 pipelineinfo.append(tem_dic)
@@ -294,6 +298,7 @@ class tagBasedRecommender:
                 for pipeline in finaldataset_dic[each]:
                     pinformation={}
                     pinformation['pipeline DOI'] = pipeline
+                    pinformation['pipeline Name']=pipelineNameDic[pipeline]
                     pinfo.append(pinformation)
                 tem_dic['recommended pipelines']= pinfo
                 datasetinfo.append(tem_dic)
