@@ -296,10 +296,7 @@ class tagBasedRecommender:
                 tem_dic['dataset name'] = each
                 pinfo=[]
                 for pipeline in finaldataset_dic[each]:
-                    pinformation={}
-                    pinformation['pipeline DOI'] = pipeline
-                    pinformation['pipeline Name']=pipelineNameDic[pipeline]
-                    pinfo.append(pinformation)
+                    pinfo.append(pipelineNameDic[pipeline])
                 tem_dic['recommended pipelines']= pinfo
                 datasetinfo.append(tem_dic)
             datasetcontent['result for dataset']= datasetinfo
