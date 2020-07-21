@@ -281,25 +281,25 @@ class tagBasedRecommender:
             for each in finalpipeline_dic:
                 tem_dic={}
                 pipelineinformation={}
-                pipelineinformation['pipeline DOI']=each
-                pipelineinformation['pipeline Name']=pipelineNameDic[each]
-                tem_dic['pipeline information'] = pipelineinformation
-                tem_dic['recommended datasets']=finalpipeline_dic[each]
+                pipelineinformation['pipeline_DOI']=each
+                pipelineinformation['pipeline_Name']=pipelineNameDic[each]
+                tem_dic['pipeline_information'] = pipelineinformation
+                tem_dic['recommended_datasets']=finalpipeline_dic[each]
                 pipelineinfo.append(tem_dic)
-            pipelinecontent['result for pipeline:'] = pipelineinfo
+            pipelinecontent['result_for_pipeline:'] = pipelineinfo
             json.dump(pipelinecontent,outfile,indent=4)
         with open ('datasetresult.json','w') as outfile:
             datasetcontent={}
             datasetinfo=[]
             for each in finaldataset_dic:
                 tem_dic={}
-                tem_dic['dataset name'] = each
+                tem_dic['dataset_name'] = each
                 pinfo=[]
                 for pipeline in finaldataset_dic[each]:
                     pinfo.append(pipelineNameDic[pipeline])
-                tem_dic['recommended pipelines']= pinfo
+                tem_dic['recommended_pipelines']= pinfo
                 datasetinfo.append(tem_dic)
-            datasetcontent['result for dataset']= datasetinfo
+            datasetcontent['result_for_dataset']= datasetinfo
             json.dump(datasetcontent,outfile,indent=4)
         ###############################################################    
 #obj = tagBasedRecommender()
