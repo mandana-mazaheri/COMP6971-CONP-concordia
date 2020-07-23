@@ -13,22 +13,7 @@ class provenanceTableFeeder(object):
 
 
     def fillProvenanceTable(self):
-        '''
-        osType = platform.system()
-        cachePath = None
-        if osType == 'Windows':
-            cachePath = os.getenv('APPDATA')
-        elif osType == 'Linux':
-            cachePath = "~/.cache"
-        '''
-        '''
-        cachePath = os.path.expanduser('~')
-
-        if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
-            os.mkdir(os.path.join(cachePath, "CONP_Recommender"))
-
-        cachePath = os.path.join(cachePath, "CONP_Recommender")
-        '''
+        
         self.conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
 
         #conn.execute("PRAGMA foreign_keys = 1")
@@ -71,15 +56,7 @@ class provenanceTableFeeder(object):
             print("sqlite3 OperationalError")
 
         exe_id = 0
-        """********************"""
-        '''
-        osType = platform.system()
-        provenancePath = None
-        if osType == 'Windows': 
-            provenancePath = os.path.join(os.getenv('HOMEDRIVE'),os.getenv('HOMEPATH'))
-        elif osType == 'Linux':
-            provenancePath = "~/.cache"
-        '''
+        
         provenancePath = os.path.expanduser('~')
         provenancePath = os.path.join(provenancePath,'.cache','boutiques','data')
 
@@ -179,40 +156,3 @@ class provenanceTableFeeder(object):
                     for subDict in df[key]:
                         self.recurse_keys(subDict,fileHashList)
 
-
-
-''' 
-    def getInputFiles(self,invoked,exe_id):
-        file_name = ""
-        file_hash = ""
-        if type(invoked) == type(dict()):
-            if "file-name" in invoked.keys():
-                file_name = invoked["file-name"]
-                if "md5sum" in invoked.keys():
-                    file_hash = invoked["md5sum"]
-                    self.cursor.execute("INSERT INTO input_files VALUES (?,?,?);", (file_name, file_hash, exe_id))
-                    self.conn.commit()
-                elif "hash" in invoked.keys():
-                    file_hash = invoked["hash"]
-                    self.cursor.execute("INSERT INTO input_files VALUES (?,?,?);", (file_name, file_hash, exe_id))
-                    self.conn.commit()
-                elif "not_found" in invoked.keys():
-                    #file_hash = str(invoked["not_found"])
-                    file_hash = "not_found"
-                    self.cursor.execute("INSERT INTO input_files VALUES (?,?,?);", (file_name, file_hash, exe_id))
-                    self.conn.commit()
-
-            else:
-                for key, value in invoked.items():
-                    if key == "verbose":
-                        print("--verbose--",str(value))
-                    elif type(value) == type(dict()):
-                        self.getInputFiles(value,exe_id)
-                    elif type(value) == type(list()):
-                        for val in value:
-                            if type(val) == type(dict()):
-                                self.getInputFiles(val,exe_id)
-'''
-        
-#obj = provenanceTableFeeder()
-#obj.fillProvenanceTable()

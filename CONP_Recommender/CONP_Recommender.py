@@ -1,3 +1,17 @@
+"""
+@author Mandana Mazaheri, mndmazaheri@gmail.com
+
+This script contains the main functions that run the CONP_Recommender API
+CONP_Recommneder API helps us to install and collect required information, 
+file hashes and dataset information from "https://github.com/CONP-PCNO/conp-dataset"
+and provenance records from zenodo using boutiques pull  
+
+
+
+
+"""
+
+
 import sys
 import platform
 import os.path
@@ -8,8 +22,6 @@ import git
 from datalad import api
 from tabulate import tabulate
 import logging
-#Since CONP_Recommender will be a folder in python, all modules should be addressed
-#from sit-packages from Python
 from CONP_Recommender import dataTableFeeder
 from CONP_Recommender import pipelineCrawler
 from CONP_Recommender import datasetDats
@@ -18,22 +30,19 @@ from CONP_Recommender import reportResults
 from CONP_Recommender import reportStatistics
 from CONP_Recommender import provenanceBasedRecommender
 from CONP_Recommender import tagBasedRecommender
-'''
-import dataTableFeeder
-import pipelineCrawler
-import datasetDats
-import provenanceTableFeeder
-import reportResults
-import reportStatistics
-'''
+
 
 class CONP_Recommender(object):
+	"""
+	The main class containing all refrences and commands
+	"""
 
 	def __init__(self):
+		"""
+		Creating objects for all necessary classes 
+		"""
 
-		logging.basicConfig(level = logging.DEBUG)
-
-
+		logging.basicConfig(level = logging.INFO)
 
 		self.dataTableFeeder = dataTableFeeder.dataTableFeeder()
 		self.pipelineCrawler = pipelineCrawler.pipelineCrawler()
@@ -52,19 +61,13 @@ class CONP_Recommender(object):
 		self.reportStatisticsCalled = False
 		self.getAndFillDatsTableCalled = False
 
-		#logging.info("CONP_Recommender Initialized")
+		
 
 	def loadConfig(self):
-		'''
-		osType = platform.system()
-		cachePath = None
-		if osType == 'Windows':
-			cachePath = os.getenv('APPDATA')
-		elif osType == 'Linux':
-			cachePath = "~/.cache"
-		'''
-
-
+		"""
+		TODO: This function should be completed to check the execution steps
+		"""
+		
 		if not os.path.exists(os.path.join(os.environ['CONP_RECOMMENDER_PATH'], "config.bin")):
 			#os.mkdir(os.path.join(cachePath, "config.bin"))
 			logging.info("Initialize CONP_Recommender by \"CONP_Recommender init\"")
@@ -85,8 +88,6 @@ class CONP_Recommender(object):
 
 	def reportResultsTable(self):
 		self.loadConfig()
-		#logging.info(self.fillDataTableCalled, self.getAndFillPipelineCalled , self.provenanceTableFeederCalled)
-		#if self.fillDataTableCalled and self.getAndFillPipelineCalled and self.provenanceTableFeederCalled:
 		self.reportResults.reportResultsFunc()
 		self.reportResultsCalled = True
 
@@ -95,27 +96,24 @@ class CONP_Recommender(object):
 			self.reportStatistics.reportStatistics()
 
 	def recommendProvenanceBased(self):
-		#self.provenanceBasedRecommender.init()
-		#self.provenanceBasedRecommender.fillDicsFromRecords()
 		self.provenanceBasedRecommender.recommendForAllPipelinesAndDatasets()
+
 	def recommendTagBased(self):
 		self.tagBasedRecommender.recommend()
 
 	def process(self,argv):
+		"""
+		Every command and operation is going to be handled here
+		"""
 		cachePath = os.path.expanduser('~')
 		if not os.path.exists(os.path.join(cachePath, "CONP_Recommender")):
 			os.mkdir(os.path.join(cachePath, "CONP_Recommender"))
 
 		cachePath = os.path.join(cachePath, "CONP_Recommender")
-		os.environ['CONP_RECOMMENDER_PATH'] = cachePath
-		'''
-		osType = platform.system()
-		cachePath = None
-		if osType == 'Windows':
-			cachePath = os.getenv('APPDATA')
-		elif osType == 'Linux':
-			cachePath = "~/.cache"
-		'''
+		#set the default directory to store database and result of recommendations
+
+		os.environ['CONP_RECOMMENDER_PATH'] = cachePath 
+		# define an environment variable for this pupose
 
 
 		#logging.info( "This is the name of the script: ", sys.argv[0])
@@ -127,6 +125,9 @@ class CONP_Recommender(object):
 
 
 			elif str(argv[0]) == 'init':
+				"""
+				to clone the conp-dataset repository and be able to extract all file hashes
+				"""
 
 				ans = input("The default path to store database is home/CONP_Recommender, do you want to change it?(y/n)")
 
@@ -145,36 +146,7 @@ class CONP_Recommender(object):
 				logging.info("cloned successfully")
 
 
-				'''
-				source = os.path.join(os.path.dirname(__file__), "conp-dataset.zip")
-				destination = cachePath
-				if path.exists(os.path.join(cachePath, "conp-dataset")):
-					userAnswer = input("conp-dataset extracted before. overwrite it? (y/n)")
-					if userAnswer in ['y', 'Y', 'yes', 'YES']:
-						logging.info("conp-dataset is extracting", flush=True)
-						logging.info("plase wait . . .", flush=True)
-						#sys.stdout.flush()
-						Archive(source).extractall(destination)
-						logging.info("conp-dataset extracted successfully")
-				else:
-					logging.info("conp-dataset is extracting", flush=True)
-					logging.info("plase wait . . .", flush=True)
-					#sys.stdout.flush()
-					Archive(source).extractall(destination)
-					logging.info("conp-dataset extracted successfully", flush=True)
-
-
-			
-			elif str(argv[0]) == 'update':  ####Problem,should be run in bash
-				#api.install(source='https://github.com/CONP-PCNO/conp-dataset.git', path = cachePath)
-				'''
-				#api.install(source='https://github.com/CONP-PCNO/conp-dataset.git',recursive = True, path = os.path.join(cachePath, "conp-dataset"))
-				'''
-					g = Github()
-					repo = g.get_repo("CONP-PCNO/conp-dataset")
-					contents = repo.get_contents("projects")  # List of "ContentFile"
-					api.install(source='https://github.com/CONP-PCNO/conp-dataset.git',recursive = True, path = cachePath)
-				'''
+				
 			elif str(argv[0]) == 'update':
 
 				repo = git.Repo(os.path.join(os.environ['CONP_RECOMMENDER_PATH'], "conp-dataset"))
@@ -184,7 +156,10 @@ class CONP_Recommender(object):
 			elif str(argv[0]) == 'install':
 				for item in argv[1:len(argv)]:
 					if str(item) == 'database':
-						#homePath = os.path.join(os.getenv('HOMEDRIVE'),os.getenv('HOMEPATH'))
+						"""
+						by this command the database will be filled
+						"""
+						
 						homePath = os.path.expanduser('~')
 						
 						provenancePath = os.path.join(homePath,'.cache')
@@ -209,7 +184,7 @@ class CONP_Recommender(object):
 						logging.info("Please waite... it takes a while to fill the database")
 						self.fillDataTable()
 						logging.info("data_files table has been filled")
-						#elif str(item) == 'provenance': # After bosh data pu;; is ok DELETE THESE
+						
 
 						self.provenanceTableFeederService()
 						logging.info("provenance table has been filled")
@@ -226,12 +201,7 @@ class CONP_Recommender(object):
 					if str(argv[1]) == 'prov':
 						self.recommendProvenanceBased()
 						logging.info("provenanced-based recommender, recommendForPiplines.json and recommendForDatasets.json is created in " +os.environ['CONP_RECOMMENDER_PATH'])
-						'''
-						linesOfPipelineTable,linesOfDatasetTable = self.recommendProvenanceBased()
-						logging.info(tabulate(linesOfPipelineTable,headers=["pipeline","List Of Datasets"],tablefmt="grid"))
-						logging.info('\n\n\n')
-						logging.info(tabulate(linesOfDatasetTable,headers=["dataset","List Of pipelines"],tablefmt="grid"))
-						'''
+						
 					elif str(argv[1]) == 'tag':
 						logging.info("tag-based recommender")
 						self.recommendTagBased()

@@ -12,23 +12,7 @@ import logging
 
 class provenanceBasedRecommender(object):
 	def init(self):
-		'''
-		osType = platform.system()
-		cachePath = None
-		if osType == 'Windows':
-			cachePath = os.getenv('APPDATA')
-		elif osType == 'Linux':
-			cachePath = "~/.cache"
-		'''
-		'''
-		self.cachePath = os.path.expanduser('~')
-		if not os.path.exists(os.path.join(self.cachePath, "CONP_Recommender")):
-			os.mkdir(os.path.join(self.cachePath, "CONP_Recommender"))
-
-		self.cachePath = os.path.join(self.cachePath, "CONP_Recommender")
-		'''
-
-
+		
 		self.conn = sqlite3.connect( os.path.join(os.environ['CONP_RECOMMENDER_PATH'], 'CONP.db'))
 		self.cursor = self.conn.cursor()
 
@@ -244,11 +228,7 @@ class provenanceBasedRecommender(object):
 		dataContents["results_for_datasets"] = data_wholeList
 		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForPiplines',pipContents)
 		self.writeToJson(os.environ['CONP_RECOMMENDER_PATH'],'recommendForDatasets',dataContents)
-		#return linesOfPipelineTable,linesOfDatasetTable
-
-		#print(tabulate(linesOfPipelineTable,headers=["pipeline","List Of Datasets"],tablefmt="grid"))
-		#print('\n\n\n')
-		#print(tabulate(linesOfDatasetTable,headers=["dataset","List Of pipelines"],tablefmt="grid"))
+		
 
 
 
