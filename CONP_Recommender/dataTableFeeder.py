@@ -11,9 +11,9 @@ import logging
 class dataTableFeeder(object):
 
     def symlinkCount(self, folder):
-    	"""
-    	this function counts the number of all symlinks (might be replaced by annex list)
-    	"""
+        """
+        this function counts the number of all symlinks (might be replaced by annex list)
+        """
         count = 0
         for filename in os.listdir(folder):
             path = os.path.join(folder, filename)
